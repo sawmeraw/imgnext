@@ -1,6 +1,6 @@
-# Image-Next
+# ImgNext
 
-Image-Next is a web application built with Next.js and TypeScript that allows users to search for product images by entering specific product codes and color codes. This project leverages the power of Next.js for server-side rendering and fast client-side navigation, providing a smooth user experience. 
+ImgNext is a web application built with Next.js and TypeScript that allows users to search for product images by entering specific product codes and color codes. This project leverages the power of Next.js for server-side rendering and fast client-side navigation, providing a smooth user experience. 
 
 ## Features
 
