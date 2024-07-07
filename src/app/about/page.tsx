@@ -1,4 +1,5 @@
 import PageWrapper from "@/components/PageWrapper";
+import Link from "next/link";
 
 export default function AboutPage() {
   return (
@@ -47,14 +48,30 @@ export default function AboutPage() {
             </p>
 
             <p className="mt-4">
-                This project was developed with the need for a better developed tool than previous version. Code efficiency, testing, maintainability and scalability were the main focus of this project.
-                Error handling was also improved to provide better user experience. Features like cargo, multiple download options and a better UI are meant for a better UX. 
+              This project was developed with the need for a better developed
+              tool than previous version. Code efficiency, testing,
+              maintainability and scalability were the main focus of this
+              project. Error handling was also improved to provide better user
+              experience. Features like cargo, multiple download options and a
+              better UI are meant for a better UX.
             </p>
             <p className="mt-4">
               The source code for this project is available on{" "}
+              <span>
+                <Link
+                  target="_blank"
+                  className="font-semibold text-lg hover:underline"
+                  href="https://github.com/sawmeraw/imgnext"
+                >
+                  Github
+                </Link>
+                .
+              </span>
             </p>
 
-            <p className="mt-16 text-center">Developed with sleepy eyes by <strong>Sameer</strong> </p>
+            <p className="mt-16 text-center">
+              Developed with sleepy eyes by <strong>Sameer</strong>{" "}
+            </p>
           </div>
         </div>
       </div>

@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Image-Next
+
+Image-Next is a web application built with Next.js and TypeScript that allows users to search for product images by entering specific product codes and color codes. This project leverages the power of Next.js for server-side rendering and fast client-side navigation, providing a smooth user experience. 
+
+## Features
+
+- **Product Search**: Search for products using product codes and color codes.
+- **Image Preview**: Preview images before downloading.
+- **Individual Image Download**: Download individual images by hovering over them and clicking the download button.
+- **Batch Image Download**: Download all displayed images as a ZIP file using the download button in the preview section.
+- **Cart Functionality**: Add images to a cart for bulk download at a later time.
+- **Error Handling**: Displays error messages for invalid URLs or unavailable images.
+
+## Technologies Used
+
+- **Next.js**: Framework for server-side rendering and static site generation.
+- **React**: Library for building user interfaces.
+- **TypeScript**: Superset of JavaScript for type safety and better development experience.
+- **Tailwind CSS**: Utility-first CSS framework for styling.
+- **Zustand**: State management library for React.
+- **JSZip**: Library for creating and managing ZIP files.
+- **React Icons**: Collection of popular icons for React.
+- **React Toastify**: Library for displaying toast notifications.
+- **UUID**: Library for generating unique IDs.
+
+## Dependencies
+
+- **jszip**: ZIP file creation and manipulation.
+- **next**: Next.js framework.
+- **react**: React library.
+- **react-dom**: React library for DOM rendering.
+- **react-icons**: SVG icons for React.
+- **react-toastify**: Toast notifications for React.
+- **uuid**: Generate unique IDs.
+- **zustand**: State management for React.
+
+## Dev Dependencies
+
+- **@types/node**: TypeScript definitions for Node.js.
+- **@types/react**: TypeScript definitions for React.
+- **@types/react-dom**: TypeScript definitions for React DOM.
+- **@types/uuid**: TypeScript definitions for UUID.
+- **eslint**: Linter for JavaScript and TypeScript.
+- **eslint-config-next**: ESLint configuration for Next.js.
+- **postcss**: Tool for transforming CSS with JavaScript.
+- **tailwindcss**: Utility-first CSS framework.
+- **typescript**: TypeScript language.
 
 ## Getting Started
 
-First, run the development server:
+To get a local copy up and running, follow these simple steps.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Prerequisites
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Node.js and npm/yarn installed
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Installation
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. Clone the repo
+   ```sh
+   git clone https://github.com/sawmeraw/imgnext.git

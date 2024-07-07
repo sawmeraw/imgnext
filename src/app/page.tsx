@@ -7,14 +7,14 @@ import SearchForm from "@/components/SearchForm";
 export default function Home() {
   return (
     <PageWrapper>
-      <BrandHeader/>
-        <div className="flex gap-4">
-          <SearchForm/> 
-          <Preview/>
-        </div>
-        <div>
-          <Note/>
-        </div>
+      <BrandHeader />
+      <div className="flex gap-4">
+        <SearchForm />
+        <Preview />
+      </div>
+      <div>
+        <Note />
+      </div>
     </PageWrapper>
   );
 }
