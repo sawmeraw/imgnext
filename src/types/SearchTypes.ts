@@ -30,9 +30,5 @@ export const brandButtons: BrandSelection[] = [
         brandName: "New Balance",
         brandValue: "newbalance"
     },
-    {
-        brandName: "2XU",
-        brandValue: "2xu"
-    }
     
 ];

@@ -8,9 +8,10 @@ import { useCartStore, useSearchStore } from "@/store/store";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { LuPackagePlus } from "react-icons/lu";
+import Loading from "./Loading";
 
 const Preview = () => {
-  const { imageUrls } = useSearchStore();
+  const { imageUrls, loading } = useSearchStore();
   const { cart, addSetToCart } = useCartStore();
   const [validImageUrls, setValidImageUrls] = useState<string[]>([]);
 
@@ -35,7 +36,7 @@ const Preview = () => {
     if (matchCount === validImageUrls.length) {
       toast.warning("All images already in cart.", { autoClose: 2500 });
     } else if (matchCount > 0) {
-      toast.warning(`${matchCount} images already in cart.`, {
+      toast.warning(`${matchCount} ${matchCount === 1 ? `image` : `images`} already in cart.`, {
         autoClose: 2500,
       });
     } else {
@@ -69,34 +70,36 @@ const Preview = () => {
       }
       setValidImageUrls(validUrls);
     };
-    validateImages();
+    if(imageUrls.length > 0) {
+      validateImages();
+    }
   }, [imageUrls]);
 
   return (
-    <div className="w-2/3 bg-white px-4 py-2 rounded-md overflow-hidden min-h-[450px]">
+    <div className="w-2/3 bg-white px-4 py-2 rounded overflow-hidden min-h-[450px]">
       <div className="flex justify-between">
         <h2 className="font-semibold text-2xl mt-4">Preview </h2>
         <div className="flex items-center gap-8">
           <button
             onClick={handleDownloadClick}
             title="download set as zip file"
-            className="py-2 px-4 bg-emerald-400 rounded-md text-white font-semibold cursor-pointer hover:bg-emerald-500 duration-200"
+            className="py-2 px-4 bg-emerald-400 rounded text-white font-semibold cursor-pointer hover:bg-emerald-500 duration-200"
           >
             Download
           </button>
           <button
             title="add set to cargo"
             onClick={handleCartSetClick}
-            className="py-2 px-4 bg-orange-300 rounded-md hover:bg-orange-400 duration-300"
+            className="py-2 px-4 bg-orange-300 rounded hover:bg-orange-400 duration-300"
           >
             <LuPackagePlus size={25} />
           </button>
         </div>
       </div>
-      <div className="flex flex-wrap gap-4 mt-4">
+      <div className="flex flex-wrap gap-4 mt-4 justify-center">
         {validImageUrls.length === 0 ? (
           <ExampleImages />
-        ) : (
+        ) : (loading ? <Loading margin="mt-8"/> :  (
           imageUrls.map((img, index) => {
             return (
               <SingleImage
@@ -107,7 +110,7 @@ const Preview = () => {
               />
             );
           })
-        )}
+        ))}
       </div>
     </div>
   );

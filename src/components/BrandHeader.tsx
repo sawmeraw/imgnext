@@ -9,9 +9,6 @@ export default function BrandHeader(){
                     <Image src="/logo_asics.webp" height={80} width={80} alt="Asics Logo"></Image>
                 </li>
                 <li>
-                    <Image src="/logo_2xu.webp" height={80} width={80} alt="2XU Logo"></Image>
-                </li>
-                <li>
                     <Image src="/logo_hoka.webp" height={50} width={50} alt="Hoka Logo"></Image>
                 </li>
                 <li>

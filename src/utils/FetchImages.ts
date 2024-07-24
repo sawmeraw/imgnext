@@ -46,7 +46,6 @@ function fetchAsicsApparel(productCode: string, colorCode: string) : string[]{
         `https://images.asics.com/is/image/asics/${productCode}_${colorCode}_GM_FT_GLB?$zoom$`,
         `https://images.asics.com/is/image/asics/${productCode}_${colorCode}_GM_BK_GLB?$zoom$`,
         `https://images.asics.com/is/image/asics/${productCode}_${colorCode}_GM_SD_GLB?$zoom$`,
-        `https://images.asics.com/is/image/asics/${productCode}_${colorCode}_GM_SD_GLB?$zoom$`,
         `https://images.asics.com/is/image/asics/${productCode}_${colorCode}_GM_Z1_GLB?$zoom$`,
         `https://images.asics.com/is/image/asics/${productCode}_${colorCode}_NM_FT_GLB?$zoom$`,
     ];

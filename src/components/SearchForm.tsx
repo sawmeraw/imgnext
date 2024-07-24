@@ -7,7 +7,7 @@ import { FormEvent } from "react";
 import { toast } from "react-toastify";
 
 const SearchForm = ()=>{
-    const {brand, setBrand, setProductCode, setColorCode, setImageUrls} = useSearchStore();
+    const {brand, setBrand, setProductCode, setColorCode, setImageUrls, setLoading} = useSearchStore();
     
 
     const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>)=>{
@@ -31,6 +31,7 @@ const SearchForm = ()=>{
     }
 
     const handleFormSubmit = async (event: FormEvent)=>{
+        setLoading();
         event.preventDefault();
 
         if(checkSelectedBrand(brand)){
@@ -45,11 +46,12 @@ const SearchForm = ()=>{
                 setColorCode(colorCode);
             }
         }
+        setLoading();
         
     }
     
     return(
-        <div className="w-1/3 bg-white px-4 py-2 rounded-md overflow-hidden">
+        <div className="w-1/3 bg-white px-4 py-2 rounded overflow-hidden">
             <h2 className="font-semibold text-2xl mt-4">Search </h2>
             <form onSubmit={handleFormSubmit} className="my-8">
                 <div className="mt-4">
@@ -67,7 +69,7 @@ const SearchForm = ()=>{
                     <input required name="colorCode" className="py-2 px-4 bg-neutral-300 rounded-sm placeholder:text-slate-600" type="text" placeholder="Color Code"/>
                 </div>
                 <div className="mt-4">
-                    <button className="py-2 px-4 bg-emerald-400 rounded-md text-white text-md font-semibold cursor-pointer hover:bg-emerald-500 duration-200 " type="submit" title="fetch images">Fetch</button>
+                    <button className="py-2 px-4 bg-emerald-400 rounded text-white text-md font-semibold cursor-pointer hover:bg-emerald-500 duration-200 " type="submit" title="fetch images">Fetch</button>
                 </div>
             </form>
 
