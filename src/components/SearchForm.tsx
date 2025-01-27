@@ -8,7 +8,7 @@ import UpdateHokaVersion from "./UpdateHokaVersion";
 const SearchForm = ()=>{
     const {brand, setBrand, setProductCode, setImageUrls, setLoading} = useSearchStore();
 
-    const handleBrandChange = (event, brand: string)=>{
+    const handleBrandChange = (brand: string)=>{
         setBrand(brand);
     }
 
@@ -26,7 +26,7 @@ const SearchForm = ()=>{
                     if (!resp.ok){
                         console.log(resp.status)
                         const errorData = resp.json()
-                        toast.error(errorData.error || "An error occurred.")
+                        toast.error("An error occurred.")
                         setLoading(false);
                         return;
                     }
@@ -63,7 +63,7 @@ const SearchForm = ()=>{
             <div className= "flex flex-col w-1/6 justify-start gap-4 bg-black rounded-md p-1">
             {brandOptions.map((btn, index)=> {
                 return <div key={index} className="basis-16">
-                <button onClick={ (event)=> handleBrandChange(event, btn.brandValue)} className={`h-full w-full rounded-md ${brand == btn.brandValue ? "bg-white" : "bg-black"} ${brand == btn.brandValue ? "text-black" : "text-white"}`}>{btn.brandName}</button>
+                <button onClick={ (event)=> handleBrandChange(btn.brandValue)} className={`h-full w-full rounded-md ${brand == btn.brandValue ? "bg-white" : "bg-black"} ${brand == btn.brandValue ? "text-black" : "text-white"}`}>{btn.brandName}</button>
             </div>
             }) }
                 
