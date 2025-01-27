@@ -1,7 +1,6 @@
 export interface SearchFormProps{
     brand: string;
     productCode: string;
-    colorCode: string;
 }
 
 export interface BrandSelection{
@@ -9,14 +8,18 @@ export interface BrandSelection{
     brandValue: string;
 }
 
-export const brandButtons: BrandSelection[] = [
+export const brandOptions: BrandSelection[] = [
     {
         brandName: "Asics Footwear",
         brandValue: "asicsftwr"
     },
     {
-        brandName: "Asics Apparel",
-        brandValue: "asicsapp"
+        brandName:"Asics Apparel", 
+        brandValue:"asicsapp"
+    },
+    {
+        brandName: "Brooks", 
+        brandValue: "brooks"
     },
     {
         brandName: "Hoka",

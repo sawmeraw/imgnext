@@ -24,16 +24,22 @@ const Preview = () => {
   };
 
   const handleCartSetClick = () => {
+    console.log(imageUrls)
     let matchCount = 0;
-    validImageUrls.forEach((url, index) => {
+    imageUrls.forEach((url, index) => {
       let match = cart.findIndex((item) => item === url);
       if (match === -1) {
-        addSetToCart(validImageUrls[index]);
+        addSetToCart(imageUrls[index]);
       } else {
         matchCount++;
       }
     });
-    if (matchCount === validImageUrls.length) {
+    if (matchCount === imageUrls.length) {
+      if(matchCount === 0){
+        toast.warn("Cant do that!", {autoClose: 3000})
+        return
+      }
+      console.log(cart)
       toast.warning("All images already in cart.", { autoClose: 2500 });
     } else if (matchCount > 0) {
       toast.warning(`${matchCount} ${matchCount === 1 ? `image` : `images`} already in cart.`, {
@@ -44,36 +50,6 @@ const Preview = () => {
     }
   };
 
-  useEffect(() => {
-    const validateImages = async () => {
-      const validUrls: string[] = [];
-      let warned = false;
-      for (const url of imageUrls) {
-        try {
-          const res = await fetch(url);
-          if (res.ok) {
-            validUrls.push(url);
-          } else {
-            if (!warned) {
-              warned = true;
-              toast.error("Invalid URL detected.", {
-                autoClose: 2500,
-              });
-            }
-          }
-        } catch (error) {
-          console.log(`Error fetching image: ${url}`);
-          toast.warning("Invalid URL detected.", {
-            autoClose: 1500,
-          });
-        }
-      }
-      setValidImageUrls(validUrls);
-    };
-    if(imageUrls.length > 0) {
-      validateImages();
-    }
-  }, [imageUrls]);
 
   return (
     <div className="w-2/3 bg-white px-4 py-2 rounded overflow-hidden min-h-[450px]">
@@ -97,7 +73,7 @@ const Preview = () => {
         </div>
       </div>
       <div className="flex flex-wrap gap-4 mt-4 justify-center">
-        {validImageUrls.length === 0 ? (
+        {imageUrls.length === 0 ? (
           <ExampleImages />
         ) : (loading ? <Loading margin="mt-8"/> :  (
           imageUrls.map((img, index) => {

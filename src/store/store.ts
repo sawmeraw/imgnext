@@ -19,44 +19,12 @@ export interface SearchState{
     brand: string;
     loading: boolean;
     productCode: string;
-    colorCode: string;
     imageUrls: string[];
     setBrand: (brand: string)=> void;
     setProductCode: (productCode: string)=> void;
-    setColorCode: (colorCode: string)=> void;
     setImageUrls: (imageUrls: string[])=> void;
-    setLoading: ()=> void;
+    setLoading: (value: boolean)=> void;
 }
-
-export interface RunDNASearchType{
-    productCode: string;
-    imageUrls: string[];
-    success?: boolean;
-}
-
-export interface RunDNASearchState{
-    currentProductCode: string;
-    loading: boolean;
-    products: RunDNASearchType[];
-    addSingleProduct: (prod: RunDNASearchType)=>void;
-    deleteProduct: (productCode: string)=>void;
-    addProducts: (prod: RunDNASearchType[])=>void;
-    clearProducts: ()=>void;
-    updateCurrentProductCode: (productCode: string)=>void;
-    setLoading: ()=>void;
-}
-
-export const useRunDNASearchStore = create<RunDNASearchState>((set)=>({
-    currentProductCode: "",
-    loading: false,
-    setLoading: ()=> set((state)=>({loading: !state.loading})),
-    products: [],
-    addSingleProduct: (prod: RunDNASearchType)=> set((state)=> ({products: [...state.products, prod]})),
-    addProducts: (prod: RunDNASearchType[])=> set((state)=> ({products: [...state.products, ...prod]})),
-    clearProducts: ()=> set({products: []}),
-    deleteProduct: (productCode: string)=> set((state)=> ({products: state.products.filter(prod=> prod.productCode !== productCode)})),
-    updateCurrentProductCode: (productCode: string)=> set({currentProductCode: productCode}),
-}))
 
 export const useCartStore = create<CartState>((set, get)=>({
     cart: [],
@@ -77,13 +45,11 @@ export const useSearchStore = create<SearchState>((set)=>({
     loading: false,
     brand: "",
     productCode: "",
-    colorCode: "",
     imageUrls: [],
     setBrand: (brand: string)=> set({brand}),
     setProductCode: (productCode: string)=> set({productCode}),
-    setColorCode: (colorCode: string)=> set({colorCode}),
     setImageUrls: (imageUrls: string[])=>set({imageUrls}),
-    setLoading: ()=> set((state)=>({loading: !state.loading})),
+    setLoading: (value: boolean)=> set((state)=>({loading: value})),
 }))
 
 
@@ -97,10 +63,4 @@ const cartZipDownload = async (cart: string[]) : Promise<void>=>{
         return;
     }
     toast.success("Downloading images...", {autoClose: 2500});
-}
-
-export const checkExisting = async (productCode : string) : Promise<boolean> =>{
-
-    const state = useRunDNASearchStore.getState();
-    return state.products.some((product)=> product.productCode === productCode);
 }

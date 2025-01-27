@@ -1,77 +1,88 @@
 "use client";
-
 import { useSearchStore } from "@/store/store";
-import { brandButtons } from "@/types/SearchTypes";
-import FetchImages from "@/utils/FetchImages";
+import { brandOptions } from "@/types/SearchTypes";
 import { FormEvent } from "react";
 import { toast } from "react-toastify";
+import UpdateHokaVersion from "./UpdateHokaVersion";
 
 const SearchForm = ()=>{
-    const {brand, setBrand, setProductCode, setColorCode, setImageUrls, setLoading} = useSearchStore();
-    
+    const {brand, setBrand, setProductCode, setImageUrls, setLoading} = useSearchStore();
 
-    const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>)=>{
-        setBrand(event.target.value);
-    }
-
-    const checkSelectedBrand = (brand: string) : boolean=>{
-        let match = false;
-        brandButtons.map(btn=>{
-            if(btn.brandValue === brand){
-                match = true;
-            }
-        })
-        if(!match){
-            toast.error("Please select a brand from the list.", {
-                autoClose: 2000
-            })
-        }
-        
-        return match;
+    const handleBrandChange = (event, brand: string)=>{
+        setBrand(brand);
     }
 
     const handleFormSubmit = async (event: FormEvent)=>{
-        setLoading();
+        setLoading(true);
         event.preventDefault();
-
-        if(checkSelectedBrand(brand)){
+        
+        if(brand != null){
             const form = event.target as HTMLFormElement;
-            const brand = form.brand.value as string;
             const productCode = form.productCode.value as string;
-            const colorCode = form.colorCode.value as string;
-            if(brand && productCode && colorCode){
-                const imageArray = FetchImages({brand, productCode, colorCode});
-                setImageUrls(imageArray);
+            if(brand && productCode){
+                try{
+                    const query = new URLSearchParams({brand, productCode}).toString()
+                    const resp = await fetch(`/search?${query}`)
+                    if (!resp.ok){
+                        console.log(resp.status)
+                        const errorData = resp.json()
+                        toast.error(errorData.error || "An error occurred.")
+                        setLoading(false);
+                        return;
+                    }
+                    const imageUrls = await resp.json()
+                    if(imageUrls.images.length > 0){
+                        setImageUrls(imageUrls.images)
+                    } else{
+                        toast.error("No images found.")
+                    }
+                } catch(error){
+                    toast.error("An error occurred while fetching images.")
+                } finally{
+                    setLoading(false);
+                }
                 setProductCode(productCode);
-                setColorCode(colorCode);
             }
         }
-        setLoading();
+
+        setLoading(false);
         
     }
-    
+
+    const displayBrandName = (value : string)=>{
+        const matchedOption = brandOptions.filter(option => option.brandValue == value)
+        if (matchedOption.length > 0) {
+            return matchedOption[0].brandName;
+        } else {
+            return "Select a brand";
+        }
+    }
+
     return(
-        <div className="w-1/3 bg-white px-4 py-2 rounded overflow-hidden">
-            <h2 className="font-semibold text-2xl mt-4">Search </h2>
-            <form onSubmit={handleFormSubmit} className="my-8">
-                <div className="mt-4">
-                    <select onChange={handleSelectChange} className="py-2 px-4 bg-neutral-300 rounded-sm w-1/2" name="brand" id="brand">
-                        <option value="">Select a Brand</option>
-                        {brandButtons.map((btn, index)=>{
-                            return <option key={index} value={btn.brandValue} >{btn.brandName}</option>
-                        })}
-                    </select>
-                </div>
-                <div className="mt-4">
-                    <input name="productCode" required className="py-2 px-4 bg-neutral-300 rounded-sm placeholder:text-slate-600" type="text" placeholder="Product Code" />
-                </div>
-                <div className="mt-4">
-                    <input required name="colorCode" className="py-2 px-4 bg-neutral-300 rounded-sm placeholder:text-slate-600" type="text" placeholder="Color Code"/>
-                </div>
-                <div className="mt-4">
-                    <button className="py-2 px-4 bg-emerald-400 rounded text-white text-md font-semibold cursor-pointer hover:bg-emerald-500 duration-200 " type="submit" title="fetch images">Fetch</button>
-                </div>
-            </form>
+        <div className="w-1/3 bg-white px-2 py-2 rounded overflow-hidden flex flex-row gap-4">
+            <div className= "flex flex-col w-1/6 justify-start gap-4 bg-black rounded-md p-1">
+            {brandOptions.map((btn, index)=> {
+                return <div key={index} className="basis-16">
+                <button onClick={ (event)=> handleBrandChange(event, btn.brandValue)} className={`h-full w-full rounded-md ${brand == btn.brandValue ? "bg-white" : "bg-black"} ${brand == btn.brandValue ? "text-black" : "text-white"}`}>{btn.brandName}</button>
+            </div>
+            }) }
+                
+            </div>
+            <div>
+                <h2 className="font-semibold text-2xl mt-4">{displayBrandName(brand)} </h2>
+                <form onSubmit={handleFormSubmit} method="get" className="my-8">
+                    
+                    <div className="mt-4">
+                        <input name="productCode" required className="py-2 px-4 bg-neutral-300 rounded-sm placeholder:text-slate-600" type="text" placeholder="Product Code" />
+                    </div>
+                    
+                    <div className="mt-4">
+                        <button className="py-2 px-4 bg-black rounded text-white text-md font-semibold cursor-pointer hover:bg-stone-600 duration-200 " type="submit">Fetch</button>
+                    </div>
+                    {brand === "hoka" ? <UpdateHokaVersion/> : null}
+                </form>
+            </div>
+            
 
         </div>
     )

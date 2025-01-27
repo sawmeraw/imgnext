@@ -41,7 +41,7 @@ export default function SingleImage(props: SingleImageProps) {
         src={props.url}
         width={200}
         height={200}
-        onError={handleError}
+        // onError={handleError}
         alt={props.alt}
         className="shadow-md rounded-md object-cover"
       />

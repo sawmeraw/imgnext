@@ -5,8 +5,7 @@ export default function Note() {
         <h2 className="text-2xl mt-4 font-semibold">Tips</h2>
         <div className="mt-4">
           <p>
-            The tool works by getting the product code and color code for
-            products. For NewBalance, the color code doesn&apos;t matter. In case of any unavailable URLs, you will be notified.
+            All you need to do is paste the product code and click the fetch button.
           </p>
         </div>
 
@@ -21,7 +20,7 @@ export default function Note() {
               using the download button on the Preview.
             </li>
             <li className="mt-4 mb-4">
-              Images can be added to the cargo (not a cart!!!) and downloaded later as a whole.
+              Images can be added to the cargo and downloaded later as a whole.
             </li>
           </ul>
         </div>
