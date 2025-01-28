@@ -3,6 +3,7 @@
 import { useCartStore } from "@/store/store";
 import Link from "next/link";
 import { LuPackageOpen } from "react-icons/lu";
+import { IoSettingsOutline } from "react-icons/io5";
 
 const Navbar = () => {
   const { cart } = useCartStore();
@@ -32,6 +33,12 @@ const Navbar = () => {
             <span className={cartCountClass}>{cartCount}</span>
           </li>
         </Link>
+               <Link href="/config" title="Set Configuration">
+          <li className="px-4 py-2 flex items-end gap-2 hover:bg-slate-200 rounded-md duration-200">
+            <IoSettingsOutline size={30} />
+          </li>
+        </Link>
+        
       </ul>
     </nav>
   );

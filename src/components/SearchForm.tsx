@@ -3,10 +3,10 @@ import { useSearchStore } from "@/store/store";
 import { brandOptions } from "@/types/SearchTypes";
 import { FormEvent } from "react";
 import { toast } from "react-toastify";
-import UpdateHokaVersion from "./UpdateHokaVersion";
+import DisplayHokaVersion from "./DisplayHokaVersion";
 
 const SearchForm = ()=>{
-    const {brand, setBrand, setProductCode, setImageUrls, setLoading} = useSearchStore();
+    const {brand, setBrand, setProductCode, setImageUrls, setLoading, loading} = useSearchStore();
 
     const handleBrandChange = (brand: string)=>{
         setBrand(brand);
@@ -77,9 +77,9 @@ const SearchForm = ()=>{
                     </div>
                     
                     <div className="mt-4">
-                        <button className="py-2 px-4 bg-black rounded text-white text-md font-semibold cursor-pointer hover:bg-stone-600 duration-200 " type="submit">Fetch</button>
+                        <button className={`py-2 px-4 rounded text-white ${loading ? 'bg-slate-600' : 'bg-black' } text-md font-semibold cursor-pointer hover:bg-stone-600 duration-200 `} type="submit" disabled={loading}>Fetch</button>
                     </div>
-                    {brand === "hoka" ? <UpdateHokaVersion/> : null}
+                    {brand === "hoka" ? <DisplayHokaVersion/> : null}
                 </form>
             </div>
         </div>
