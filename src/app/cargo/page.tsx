@@ -8,14 +8,14 @@ import Link from "next/link";
 export default function CartPage() {
   const { cart, removeFromCart, clearCart, downloadCart } = useCartStore();
 
-  const buttonClasses = "duration-200 px-4 py-2 rounded text-white";
+  const buttonClasses = "px-4 py-2 bg-black rounded text-white text-md font-semibold cursor-pointer hover:bg-stone-600 duration-200";
 
   return (
     <PageWrapper>
       <div className="w-full bg-white px-8 py-6 rounded-md overflow-hidden min-h-[1000px]">
         <Link href="/" className="hover:underline font-semibold">
-          {" "}
-          ...Back
+          {"<"}
+          Back
         </Link>
         <div className="flex justify-between items-center">
           <h2 className="text-2xl mt-4 font-semibold">
@@ -23,14 +23,14 @@ export default function CartPage() {
           </h2>
           <div className="flex gap-6 items-center">
             <button
-              className={`bg-red-400 hover:bg-red-500 ${buttonClasses}`}
+              className={`${buttonClasses}`}
               onClick={clearCart}
               title="clear the cargo"
             >
               Clear
             </button>
             <button
-              className={`bg-green-400 hover:bg-green-500 ${buttonClasses}`}
+              className={` ${buttonClasses}`}
               onClick={downloadCart}
               title="download all"
             >
@@ -38,7 +38,7 @@ export default function CartPage() {
             </button>
           </div>
         </div>
-        <p className="text-xs mt-4 text-red-600">Download clears the cargo.</p>
+        
         <div className="overflow-x-auto mt-8">
       {cart.length > 0 ? (
         <table className="min-w-full divide-y divide-gray-200">

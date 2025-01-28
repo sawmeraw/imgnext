@@ -20,17 +20,17 @@ export default function UpdateHokaVersion() {
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
         const form = event.target as HTMLFormElement
-        const newVersion = form.version.value
+        const version = form.version.value as string
 
         try{
-            const resp = await fetch('/updateVersion', {method: "POST",
+            const resp = await fetch('/version', {method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body:JSON.stringify({newVersion}),
+                body:JSON.stringify({version}),
             })
             if(resp.ok){
-                updateVersion(newVersion);
+                updateVersion(version);
                 toast.success("Version Updated Successfully")
             }
         } catch(error){

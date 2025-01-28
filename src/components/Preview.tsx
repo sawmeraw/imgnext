@@ -59,14 +59,14 @@ const Preview = () => {
           <button
             onClick={handleDownloadClick}
             title="download set as zip file"
-            className="py-2 px-4 bg-emerald-400 rounded text-white font-semibold cursor-pointer hover:bg-emerald-500 duration-200"
+            className="py-2 px-4 bg-black rounded text-white text-md font-semibold cursor-pointer hover:bg-stone-600 duration-200"
           >
             Download
           </button>
           <button
             title="add set to cargo"
             onClick={handleCartSetClick}
-            className="py-2 px-4 bg-orange-300 rounded hover:bg-orange-400 duration-300"
+            className="py-2 px-4 bg-black rounded text-white text-md font-semibold cursor-pointer hover:bg-stone-600 duration-200"
           >
             <LuPackagePlus size={25} />
           </button>

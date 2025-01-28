@@ -82,8 +82,6 @@ const SearchForm = ()=>{
                     {brand === "hoka" ? <UpdateHokaVersion/> : null}
                 </form>
             </div>
-            
-
         </div>
     )
 }

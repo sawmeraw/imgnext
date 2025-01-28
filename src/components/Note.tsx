@@ -5,7 +5,7 @@ export default function Note() {
         <h2 className="text-2xl mt-4 font-semibold">Tips</h2>
         <div className="mt-4">
           <p>
-            All you need to do is paste the product code and click the fetch button.
+            Select the brand and paste the product code and click the fetch button.
           </p>
         </div>
 
