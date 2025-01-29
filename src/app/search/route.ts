@@ -1,12 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import FetchImages from "./fetchImages";
 import { NextApiRequest, NextApiResponse } from "next";
-
-
-interface ImageResponse {
-    images?: string[];
-    error?: string;
-}
   
 export async function GET(req: NextRequest) {
     const url = new URL(req.url);

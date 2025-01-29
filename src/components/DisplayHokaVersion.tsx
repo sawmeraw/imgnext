@@ -17,8 +17,6 @@ export default function DisplayHokaVersion() {
         fetchExisting();
     }, [])
 
-
-
     return (
         <div className="mt-4">
             Current Version: {version}

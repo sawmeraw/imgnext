@@ -4,6 +4,7 @@ import { brandOptions } from "@/types/SearchTypes";
 import { FormEvent } from "react";
 import { toast } from "react-toastify";
 import DisplayHokaVersion from "./DisplayHokaVersion";
+import SearchAPIImageResponse from "@/apiTypes/SearchTypes";
 
 const SearchForm = ()=>{
     const {brand, setBrand, setProductCode, setImageUrls, setLoading, loading} = useSearchStore();
@@ -25,8 +26,8 @@ const SearchForm = ()=>{
                     const resp = await fetch(`/search?${query}`)
                     if (!resp.ok){
                         console.log(resp.status)
-                        const errorData = resp.json()
-                        toast.error("An error occurred.")
+                        const errorData: SearchAPIImageResponse = await resp.json()
+                        toast.error(errorData.error || "An error occurred.")
                         setLoading(false);
                         return;
                     }
@@ -43,6 +44,8 @@ const SearchForm = ()=>{
                 }
                 setProductCode(productCode);
             }
+        } else{
+            toast.warn("Select a brand from the options.", {autoClose: 3500})
         }
 
         setLoading(false);

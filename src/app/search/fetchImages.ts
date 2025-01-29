@@ -3,6 +3,7 @@ import { SearchFormProps } from "@/types/SearchTypes";
 import path from "path";
 import fs from "fs";
 import { version } from "os";
+import { getCurrentVersion } from "../version/route";
 
 export default async function FetchImages(props: SearchFormProps) : Promise<string[]>{
     const {brand, productCode} = props;
@@ -19,7 +20,7 @@ export default async function FetchImages(props: SearchFormProps) : Promise<stri
             urls = fetchSaucony(productCode);
             break;
         case "hoka":
-            urls = fetchHoka(productCode);
+            urls = await fetchHoka(productCode);
             break;
         case "newbalance":
             urls = fetchNewBalance(productCode);
@@ -33,7 +34,6 @@ export default async function FetchImages(props: SearchFormProps) : Promise<stri
 
     const validatedUrls =  await validateUrls(urls) 
     return validatedUrls
-
 }
 
 function isAlpha(char: string): boolean{
@@ -109,6 +109,10 @@ function fetchSaucony(productCode: string) : string[]{
 
 function fetchNewBalance(productCode: string): string[]{
     productCode = productCode.trim().toLowerCase();
+    let dashIndex = productCode.indexOf('-')
+    if(dashIndex != -1){
+        productCode = productCode.substring(0, dashIndex)
+    }
     const urlArray = [
         `https://nb.scene7.com/is/image/NB/${productCode}_nb_02_i?$dw_detail_main_lg$&bgc=ffffff&layer=1&bgcolor=ffffff&blendMode=mult&scale=10&wid=1600&hei=1600`,
         `https://nb.scene7.com/is/image/NB/${productCode}_nb_03_i?$dw_detail_main_lg$&bgc=ffffff&layer=1&bgcolor=ffffff&blendMode=mult&scale=10&wid=1600&hei=1600`,
@@ -120,24 +124,22 @@ function fetchNewBalance(productCode: string): string[]{
     return urlArray;
 }
 
-function fetchHoka(productCode: string) : string[]{
+async function fetchHoka(productCode: string) : Promise<string[]>{
     productCode = productCode.trim().toUpperCase();
     let dashIndex = productCode.indexOf("-")
     const itemCode = productCode.substring(0, dashIndex)
     const colorCode = productCode.substring(dashIndex+1)
 
-    const versionPath = path.join(process.cwd(), 'data', 'hokaVersion.json')
-    const fileContent = fs.readFileSync(versionPath, 'utf-8')
-    const versionNumber = JSON.parse(fileContent).version
-
+    const config = await getCurrentVersion()
+    
 
     const urlArray = [
-        `https://dms.deckers.com/hoka/image/upload/q_auto,dpr_auto/b_rgb:ffffff/w_1510/${versionNumber}/${itemCode}-${colorCode}_1.png?_s=RAABAB0`,
-        `https://dms.deckers.com/hoka/image/upload/q_auto,dpr_auto/b_rgb:ffffff/w_1510/${versionNumber}/${itemCode}-${colorCode}_2.png?_s=RAABAB0`,
-        `https://dms.deckers.com/hoka/image/upload/q_auto,dpr_auto/b_rgb:ffffff/w_1510/${versionNumber}/${itemCode}-${colorCode}_5.png?_s=RAABAB0`,
-        `https://dms.deckers.com/hoka/image/upload/q_auto,dpr_auto/b_rgb:ffffff/w_1510/${versionNumber}/${itemCode}-${colorCode}_6.png?_s=RAABAB0`,
-        `https://dms.deckers.com/hoka/image/upload/q_auto,dpr_auto/b_rgb:ffffff/w_1510/${versionNumber}/${itemCode}-${colorCode}_7.png?_s=RAABAB0`,
-        `https://dms.deckers.com/hoka/image/upload/q_auto,dpr_auto/b_rgb:ffffff/w_1510/${versionNumber}/${itemCode}-${colorCode}_8.png?_s=RAABAB0`,
+        `https://dms.deckers.com/hoka/image/upload/q_auto,dpr_auto/b_rgb:ffffff/w_1510/${config?.version}/${itemCode}-${colorCode}_1.png?_s=RAABAB0`,
+        `https://dms.deckers.com/hoka/image/upload/q_auto,dpr_auto/b_rgb:ffffff/w_1510/${config?.version}/${itemCode}-${colorCode}_2.png?_s=RAABAB0`,
+        `https://dms.deckers.com/hoka/image/upload/q_auto,dpr_auto/b_rgb:ffffff/w_1510/${config?.version}/${itemCode}-${colorCode}_5.png?_s=RAABAB0`,
+        `https://dms.deckers.com/hoka/image/upload/q_auto,dpr_auto/b_rgb:ffffff/w_1510/${config?.version}/${itemCode}-${colorCode}_6.png?_s=RAABAB0`,
+        `https://dms.deckers.com/hoka/image/upload/q_auto,dpr_auto/b_rgb:ffffff/w_1510/${config?.version}/${itemCode}-${colorCode}_7.png?_s=RAABAB0`,
+        `https://dms.deckers.com/hoka/image/upload/q_auto,dpr_auto/b_rgb:ffffff/w_1510/${config?.version}/${itemCode}-${colorCode}_8.png?_s=RAABAB0`,
     ];
 
     return urlArray;

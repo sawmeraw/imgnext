@@ -2,10 +2,10 @@ import { toast } from "react-toastify";
 import { v4 as uuid } from "uuid";
 import JSZip from "jszip";
 
-export async function previewImagesDownload(images: string[]) : Promise<void>{
+export async function previewImagesDownload(productCode: string, images: string[]) : Promise<void>{
   try {
     const zip = new JSZip();
-    const imagePromises = images.map(async (image)=>{
+    const imagePromises = images.map(async (image, index)=>{
       const response = await fetch(image);
       if(!response.ok){
         toast.error("Error downloading image", {
@@ -15,14 +15,14 @@ export async function previewImagesDownload(images: string[]) : Promise<void>{
       }
       const blob = await response.blob();
       const randomHash = uuid();
-      zip.file(`image-${randomHash}.jpeg`, blob);
+      zip.file(`${productCode? productCode : "imgnext"}-${index}.jpeg`, blob);
     })
 
     await Promise.all(imagePromises);
     zip.generateAsync({type: "blob"}).then(content=>{
       const link = document.createElement('a');
       link.href = URL.createObjectURL(content);
-      link.download = `images-${uuid()}.zip`;
+      link.download = `imgnext-${productCode}-${uuid().substring(0, 5)}.zip`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -39,7 +39,7 @@ export async function previewImagesDownload(images: string[]) : Promise<void>{
   }
 }
 
-export async function singleImageDownload(url: string) : Promise<void>{
+export async function singleImageDownload(productCode: string, url: string) : Promise<void>{
     try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -54,7 +54,7 @@ export async function singleImageDownload(url: string) : Promise<void>{
   
         const randomHash = uuid();
   
-        link.download = `image-${randomHash}`;
+        link.download = `${productCode? productCode : "imgnext"}-${randomHash.substring(0, 4)}`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);

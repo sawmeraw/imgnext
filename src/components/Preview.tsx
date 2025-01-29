@@ -11,13 +11,13 @@ import { LuPackagePlus } from "react-icons/lu";
 import Loading from "./Loading";
 
 const Preview = () => {
-  const { imageUrls, loading } = useSearchStore();
+  const {productCode, imageUrls, loading } = useSearchStore();
   const { cart, addSetToCart } = useCartStore();
   const [validImageUrls, setValidImageUrls] = useState<string[]>([]);
 
   const handleDownloadClick = async () => {
     try {
-      await previewImagesDownload(imageUrls);
+      await previewImagesDownload(productCode, imageUrls);
     } catch (error) {
       console.log("Error downloading image.");
     }

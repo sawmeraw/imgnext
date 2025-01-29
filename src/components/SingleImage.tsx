@@ -1,6 +1,6 @@
 "use client";
 
-import { useCartStore } from "@/store/store";
+import { useCartStore, useSearchStore } from "@/store/store";
 import { SingleImageProps } from "@/types/ImageTypes";
 import { singleImageDownload } from "@/utils/ImageParser";
 import Image from "next/image";
@@ -12,14 +12,11 @@ import { toast } from "react-toastify";
 export default function SingleImage(props: SingleImageProps) {
   const [showImage, setShowImage] = useState<boolean>(true);
   const {cart, addToCart } = useCartStore();
-
-  const handleError = () => {
-    setShowImage(false);
-  };
+  const {productCode} = useSearchStore();
 
   const handleSingleImageDownloadClick = async () => {
     try {
-      await singleImageDownload(props.url);
+      await singleImageDownload(productCode, props.url);
     } catch (error) {
       console.log("Error downloading image.");
     }
@@ -41,7 +38,6 @@ export default function SingleImage(props: SingleImageProps) {
         src={props.url}
         width={200}
         height={200}
-        // onError={handleError}
         alt={props.alt}
         className="shadow-md rounded-md object-cover"
       />
