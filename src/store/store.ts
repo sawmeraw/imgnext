@@ -56,7 +56,8 @@ export const useSearchStore = create<SearchState>((set)=>({
 const cartZipDownload = async (cart: string[]) : Promise<void>=>{
     
     try{
-        await previewImagesDownload(cart);
+        
+        await previewImagesDownload("", cart);
         useCartStore.getState().clearCart();    
     } catch(error){
         toast.error("Error downloading images!", {autoClose: 2500});
