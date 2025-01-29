@@ -3,7 +3,7 @@ import { SearchFormProps } from "@/types/SearchTypes";
 import path from "path";
 import fs from "fs";
 import { version } from "os";
-import { getCurrentVersion } from "../version/route";
+import { getCurrentVersion } from "../version/bucket";
 
 export default async function FetchImages(props: SearchFormProps) : Promise<string[]>{
     const {brand, productCode} = props;
