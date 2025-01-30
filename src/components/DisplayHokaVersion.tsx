@@ -1,25 +1,27 @@
 "use client"
-
+import { useConfigStore } from "@/store/store";
 import { FormEvent, useEffect, useState } from "react"
 import { toast } from "react-toastify";
 
 export default function DisplayHokaVersion() {
-    const [version, updateVersion] = useState<string>();
 
+    const {hokaVersion, setHokaVersion} = useConfigStore();
     useEffect(() => {
+
         const fetchExisting = async () => {
             const resp = await fetch('/version', { method: "GET" })
             const data = await resp.json()
-            console.log(data)
-            updateVersion(data.version)
-
+            setHokaVersion(data.version)
         }
-        fetchExisting();
+        if (hokaVersion == "" || !hokaVersion){
+            fetchExisting();
+        }
+
     }, [])
 
     return (
         <div className="mt-4">
-            Current Version: {version}
+            Current Version: {hokaVersion}
         </div>
     )
 }

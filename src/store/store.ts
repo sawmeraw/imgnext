@@ -1,7 +1,13 @@
+import { VersionAPIResponse } from "@/apiTypes/VersionType";
 import { previewImagesDownload } from "@/utils/ImageParser";
 import { get } from "http";
 import { toast } from "react-toastify";
 import { create } from "zustand";
+
+interface ConfigState{
+    hokaVersion: string,
+    setHokaVersion: (version: string)=> void,
+}
 
 interface CartState{
     cart: string[];
@@ -50,6 +56,11 @@ export const useSearchStore = create<SearchState>((set)=>({
     setProductCode: (productCode: string)=> set({productCode}),
     setImageUrls: (imageUrls: string[])=>set({imageUrls}),
     setLoading: (value: boolean)=> set((state)=>({loading: value})),
+}))
+
+export const useConfigStore = create<ConfigState>((set)=>({
+    hokaVersion: "",
+    setHokaVersion: (version: string) => set({hokaVersion: version})
 }))
 
 

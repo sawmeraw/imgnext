@@ -3,19 +3,23 @@
 import { FormEvent, useEffect, useState } from "react"
 import { toast } from "react-toastify";
 import Loading from "./Loading";
+import { useConfigStore } from "@/store/store";
 
 export default function UpdateHokaVersion() {
-    const [version, updateVersion] = useState<string>();
+    const {hokaVersion, setHokaVersion} = useConfigStore();
     const [loading, setLoading] = useState<boolean>();
 
     useEffect(() => {
+
         const fetchExisting = async () => {
             const resp = await fetch('/version', { method: "GET" })
             const data = await resp.json()
-            console.log(data)
-            updateVersion(data.version)
+            setHokaVersion(data.version)
         }
-        fetchExisting();
+        if (hokaVersion == "" || !hokaVersion){
+            fetchExisting();
+        }
+
     }, [])
 
     const handleSubmit = async (event: FormEvent) => {
@@ -33,7 +37,7 @@ export default function UpdateHokaVersion() {
             })
             if(resp.ok){
                 setLoading(false);
-                updateVersion(version);
+                setHokaVersion(version);
                 toast.success("Version Updated Successfully");
                 setTimeout(()=>{
                     form.reset()
@@ -50,7 +54,7 @@ export default function UpdateHokaVersion() {
     return (
         <div className="mt-4 px-4">
             <div className="flex flex-row gap-3">
-            <p>HOKA Route Version: {version}</p>
+            <p>HOKA Route Version: {hokaVersion}</p>
             <p>{loading ? <Loading/> : ""}</p>
             </div>
             <form onSubmit={handleSubmit} method="post">

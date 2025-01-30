@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({version: 'NA', error: "Couldn't read the data in the server."}, {status: 500})
   }
   const res = NextResponse.json({version: data.version}, {status: 200})
-  res.headers.set('Cache-Control', 'public, max-age=172800, stale-while-revalidate=86400')
+  res.headers.set('Cache-Control', 'max-age=7200')
   return res
 }
 
@@ -25,6 +25,5 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({version}, {status: 200})
   }
   return NextResponse.json({version: "NA"}, {status: 500})
-  
 }
 
