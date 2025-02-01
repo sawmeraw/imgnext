@@ -12,7 +12,7 @@ export default function LoginPage(){
         try{
           const form = event.target as HTMLFormElement
           const password = form.password.value as string
-          const response = await fetch('/auth', {method: "POST", body: JSON.stringify({password})})
+          const response = await fetch('/api/auth', {method: "POST", body: JSON.stringify({password})})
           const message: LoginResponse = await response.json()
           setRespMessage(message.message || "")
           if(!response.ok){
@@ -32,10 +32,19 @@ export default function LoginPage(){
 
     return (
         
-            <div className="min-h-screen w-full grid grid-cols-4">
-      <div className="col-span-2 flex items-center justify-center">
-        <h1 className="text-6xl font-bold text-center">Img Next</h1>
-      </div>
+      <div className="min-h-screen w-full grid grid-cols-4 bg-gradient-to-r from-gray-900 to-gray-700">
+  <div className="col-span-2 flex items-center justify-center">
+    <h1 className="text-6xl font-bold text-center text-white">
+      {"Img Next".split("").map((letter, index) => (
+        <span
+          key={index}
+          className={`inline-block ${letter === 'e' ? 'animate-bounce-vertical' : ''}`}
+        >
+          {letter}
+        </span>
+      ))}
+    </h1>
+  </div>
 
       <div className="col-start-4 bg-white flex items-center justify-center p-8">
         <form onSubmit={handleLogin} className="w-full max-w-md bg-white p-8 rounded-lg shadow-md">

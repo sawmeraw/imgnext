@@ -7,6 +7,19 @@ const nextConfig = {
                 hostname: "**",
             }
         ]
+    },
+    async headers(){
+        return [
+            {
+                source: '/_next/:path*',
+                headers:[
+                    {
+                        key: 'Cache-Control',
+                        value: 'public, max-age=315600, must-revalidate',
+                    }
+                ]
+            }
+        ]
     }
 };
 

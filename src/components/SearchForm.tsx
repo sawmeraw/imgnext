@@ -23,7 +23,7 @@ const SearchForm = ()=>{
             if(brand && productCode){
                 try{
                     const query = new URLSearchParams({brand, productCode}).toString()
-                    const resp = await fetch(`/search?${query}`)
+                    const resp = await fetch(`/api/search?${query}`)
                     if (!resp.ok){
                         console.log(resp.status)
                         const errorData: SearchAPIImageResponse = await resp.json()

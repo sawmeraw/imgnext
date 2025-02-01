@@ -1,6 +1,6 @@
 import SingleImage from "./SingleImage";
 import { SearchFormProps } from "@/types/SearchTypes";
-import FetchImages from "@/app/search/fetchImages";
+import FetchImages from "@/app/api/search/fetchImages";
 import { v4 as uuid } from "uuid";
 import { useState, useEffect} from "react";
 

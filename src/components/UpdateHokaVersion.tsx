@@ -12,7 +12,7 @@ export default function UpdateHokaVersion() {
     useEffect(() => {
 
         const fetchExisting = async () => {
-            const resp = await fetch('/version', { method: "GET" })
+            const resp = await fetch('/api/version', { method: "GET" })
             const data = await resp.json()
             setHokaVersion(data.version)
         }
