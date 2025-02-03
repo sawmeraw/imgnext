@@ -36,19 +36,19 @@ const Navbar = () => {
 
   return (
     <nav className="flex justify-between gap-4 w-full shadow-md py-4 px-8">
-      <ul className="">
+      <div className="">
         <Link href="/" title="ImgNext Home">
-          <li className="font-semibold p-1 text-xl">
+          <li className="font-semibold p-1 text-xl list-none">
             Img<span className="text-blue-500 ml-1">Next</span>
           </li>
         </Link>
-      </ul>
-      <ul className=" flex gap-8 items-center">
-        {/* <Link href="/edit-images" title="Edit Images">
+      </div>
+      <div className=" flex gap-8 items-center">
+        <Link href="/edit-images" title="Edit Images">
           <li className="px-4 py-2 flex items-end gap-2 hover:bg-slate-200 rounded-md duration-200">
             <RiImageEditFill size={30} />
           </li>
-        </Link> */}
+        </Link>
         <Link href="/cargo" title={`Cargo: ${cartCount} items`}>
           <li className="px-4 py-2 flex items-end gap-2 hover:bg-slate-200 rounded-md duration-200">
             <LuPackageOpen size={30} />
@@ -66,7 +66,7 @@ const Navbar = () => {
           </li>
         </Link>
 
-      </ul>
+      </div>
     </nav>
   );
 };
