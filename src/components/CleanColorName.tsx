@@ -16,12 +16,10 @@ export default function CleanColorName() {
                 for (let w of innerWords) {
                     resultArr.push(w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
                 }
-
             } else {
                 resultArr.push(word.charAt(0) + word.slice(1).toLowerCase())
             }
         }
-
         const resultString = resultArr.join('/')
         return resultString
     }
@@ -31,8 +29,13 @@ export default function CleanColorName() {
     }
 
     const handleCopyResult = () => {
-        navigator.clipboard.writeText(result)
-        toast.success('Copied to clipboard', { autoClose: 3000 })
+        try {
+
+            navigator.clipboard.writeText(result)
+            toast.success('Copied to clipboard', { autoClose: 3000 })
+        } catch (error) {
+            toast.error('Error copying to clipboard', { autoClose: 3000 })
+        }
     }
 
     return (
