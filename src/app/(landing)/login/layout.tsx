@@ -1,4 +1,5 @@
 import "../../globals.css";
+import Footer from "@/components/Footer";
 
 export const metadata = {
   title: 'ImgNext',
@@ -12,7 +13,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <main className="flex flex-1 flex-col items-center justify-between w-full">
+          {children}
+        </main>
+      </body>
     </html>
   )
 }

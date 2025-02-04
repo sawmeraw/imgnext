@@ -11,7 +11,6 @@ export default function ImageUploadForm() {
     const [isDragging, setIsDragging] = useState<boolean>(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    // Handle file selection
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             const selectedFiles = Array.from(e.target.files);
@@ -19,7 +18,6 @@ export default function ImageUploadForm() {
         }
     };
 
-    // Handle drag-and-drop
     const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
         e.preventDefault();
         setIsDragging(true);
@@ -36,7 +34,6 @@ export default function ImageUploadForm() {
         setFiles((prevFiles) => [...prevFiles, ...droppedFiles]);
     };
 
-    // Remove a file from the list
     const removeFile = (index: number) => {
         setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
     };
@@ -47,7 +44,6 @@ export default function ImageUploadForm() {
         }
     };
 
-    // Process and upload files
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -64,14 +60,13 @@ export default function ImageUploadForm() {
                 })
             );
 
-            // Convert processed images to data URLs for display
             const processedImageUrls = await Promise.all(
                 processedFiles.map(async (file) => {
                     return await fileToDataUrl(file);
                 })
             );
 
-            setProcessedFiles(processedImageUrls); // Store processed image URLs
+            setProcessedFiles(processedImageUrls);
             toast.success('Files processed successfully!');
         } catch (error) {
             console.error('Error processing files:', error);
@@ -88,6 +83,7 @@ export default function ImageUploadForm() {
             reader.onerror = () => {
                 reject(new Error('Failed to read file'));
             };
+            //base64 encoded url for the src property of the image
             reader.readAsDataURL(file);
         });
     };
@@ -129,15 +125,12 @@ export default function ImageUploadForm() {
 
                 const backgroundColor = getBackgroundColor(data, canvasWidth);
 
-                // Find edges
                 const topPadding = calculateTopPadding(data, canvasWidth, canvasHeight, backgroundColor);
                 const bottomPadding = calculateBottomPadding(data, canvasWidth, canvasHeight, backgroundColor);
                 const { leftStart, rightEnd } = findEdges(data, canvasWidth, canvasHeight, backgroundColor);
 
-                // Set maximum whitespace
                 const maxWhitespace = 100;
 
-                // Calculate new dimensions with reduced whitespace
                 const newTop = Math.max(0, topPadding - maxWhitespace);
                 const newBottom = Math.min(canvasHeight, canvasHeight - bottomPadding + maxWhitespace);
                 const newHeight = newBottom - newTop;
@@ -145,19 +138,6 @@ export default function ImageUploadForm() {
                 const adjustedLeftPadding = Math.max(0, leftStart - maxWhitespace);
                 const adjustedRightPadding = Math.min(canvasWidth, rightEnd + maxWhitespace);
                 const newWidth = adjustedRightPadding - adjustedLeftPadding;
-
-                // console.log('Original Width:', canvasWidth);
-                // console.log('Original Height:', canvasHeight);
-                // console.log('Top Padding:', topPadding);
-                // console.log('Bottom Padding:', bottomPadding);
-                // console.log('Left Start:', leftStart);
-                // console.log('Right End:', rightEnd);
-                // console.log('New Top:', newTop);
-                // console.log('New Bottom:', newBottom);
-                // console.log('Adjusted Left Padding:', adjustedLeftPadding);
-                // console.log('Adjusted Right Padding:', adjustedRightPadding);
-                // console.log('New Width:', newWidth);
-                // console.log('New Height:', newHeight);
 
                 const finalCanvas = document.createElement('canvas');
                 finalCanvas.width = newWidth;
@@ -183,21 +163,24 @@ export default function ImageUploadForm() {
 
                 finalCanvas.toBlob((blob) => {
                     if (!blob) {
+                        toast.error('Error while processing!', { autoClose: 2500 })
                         reject(new Error('Failed to create blob'));
                         return;
                     }
+                    //create a file from the blob with metadata
                     const processedFile = new File([blob], file.name, { type: 'image/png' });
                     resolve(processedFile);
                 }, 'image/png');
             };
 
             img.onerror = () => {
+                toast.error("Failed to load image", { autoClose: 2500 })
                 reject(new Error('Failed to load image'));
             };
         });
     };
 
-    // Helper function to calculate top padding
+    //return the top edge of the object in the image
     const calculateTopPadding = (
         data: Uint8ClampedArray,
         canvasWidth: number,
@@ -241,6 +224,7 @@ export default function ImageUploadForm() {
         return canvasHeight;
     };
 
+    //find the edges on the sides of the object
     const findEdges = (
         data: Uint8ClampedArray,
         canvasWidth: number,
@@ -274,13 +258,13 @@ export default function ImageUploadForm() {
         link.click();
     };
 
-    const downloadAllImages = () =>{
-        processedFiles.forEach((dataUrl, index)=>{
-            downloadImage(dataUrl, `imgnext_edit-${uuid().substring(0,4)}`)
+    const downloadAllImages = () => {
+        processedFiles.forEach((dataUrl, index) => {
+            downloadImage(dataUrl, `imgnext_edit-${uuid().substring(0, 4)}`)
         })
     }
 
-    const clearAllImages = ()=>{
+    const clearAllImages = () => {
         setFiles([])
         setProcessedFiles([])
     }
@@ -325,9 +309,9 @@ export default function ImageUploadForm() {
                         >
                             Process Images
                         </button>
-                        <button type='button' onClick={clearAllImages} className=" mt-6 px-4 py-2 bg-black text-white font-semibold rounded hover:bg-stone-600 disabled:bg-gray-300 disabled:cursor-not-allowed">Clear All</button>
-                    </div>
-                        </form>
+                            <button type='button' onClick={clearAllImages} className=" mt-6 px-4 py-2 bg-black text-white font-semibold rounded hover:bg-stone-600 disabled:bg-gray-300 disabled:cursor-not-allowed">Clear All</button>
+                        </div>
+                    </form>
                 </div>
                 <div className="w-2/3">
                     <ImagePreview files={files} onRemove={removeFile} />
@@ -349,12 +333,6 @@ export default function ImageUploadForm() {
                                     alt={`Processed ${index}`}
                                     className="w-32 h-32 object-contain rounded-lg"
                                 />
-                                {/* <button
-                                    onClick={() => downloadImage(dataUrl, `processed_${index}.png`)}
-                                    className="mt-2 p-1 bg-black text-white rounded-sm hover:bg-stone-600 duration-300"
-                                >
-                                    Download
-                                </button> */}
                             </div>
                         ))}
                     </div>
