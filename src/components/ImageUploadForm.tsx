@@ -119,6 +119,9 @@ export default function ImageUploadForm() {
                 const canvasHeight = img.height;
                 canvas.width = canvasWidth;
                 canvas.height = canvasHeight;
+
+                // ctx.fillStyle = 'white'
+                // ctx.fillRect(0, 0, canvasWidth, canvasHeight)
                 ctx.drawImage(img, 0, 0, canvasWidth, canvasHeight);
 
                 const imageData = ctx.getImageData(0, 0, canvasWidth, canvasHeight);
@@ -143,18 +146,18 @@ export default function ImageUploadForm() {
                 const adjustedRightPadding = Math.min(canvasWidth, rightEnd + maxWhitespace);
                 const newWidth = adjustedRightPadding - adjustedLeftPadding;
 
-                console.log('Original Width:', canvasWidth);
-                console.log('Original Height:', canvasHeight);
-                console.log('Top Padding:', topPadding);
-                console.log('Bottom Padding:', bottomPadding);
-                console.log('Left Start:', leftStart);
-                console.log('Right End:', rightEnd);
-                console.log('New Top:', newTop);
-                console.log('New Bottom:', newBottom);
-                console.log('Adjusted Left Padding:', adjustedLeftPadding);
-                console.log('Adjusted Right Padding:', adjustedRightPadding);
-                console.log('New Width:', newWidth);
-                console.log('New Height:', newHeight);
+                // console.log('Original Width:', canvasWidth);
+                // console.log('Original Height:', canvasHeight);
+                // console.log('Top Padding:', topPadding);
+                // console.log('Bottom Padding:', bottomPadding);
+                // console.log('Left Start:', leftStart);
+                // console.log('Right End:', rightEnd);
+                // console.log('New Top:', newTop);
+                // console.log('New Bottom:', newBottom);
+                // console.log('Adjusted Left Padding:', adjustedLeftPadding);
+                // console.log('Adjusted Right Padding:', adjustedRightPadding);
+                // console.log('New Width:', newWidth);
+                // console.log('New Height:', newHeight);
 
                 const finalCanvas = document.createElement('canvas');
                 finalCanvas.width = newWidth;
@@ -267,14 +270,25 @@ export default function ImageUploadForm() {
     const downloadImage = (dataUrl: string, fileName: string) => {
         const link = document.createElement('a');
         link.href = dataUrl;
-        link.download = `imgnext-${uuid().substring(0, 4)}.png`;
+        link.download = `imgnext-${uuid().substring(0, 4)}.jpeg`;
         link.click();
     };
+
+    const downloadAllImages = () =>{
+        processedFiles.forEach((dataUrl, index)=>{
+            downloadImage(dataUrl, `imgnext_edit-${uuid().substring(0,4)}`)
+        })
+    }
+
+    const clearAllImages = ()=>{
+        setFiles([])
+        setProcessedFiles([])
+    }
 
     return (
         <>
             <div className="flex w-full">
-                <div className="w-1/3 bg-white rounded overflow-hidden flex flex-col flex-shrink-0 shadow-lg">
+                <div className="w-1/3 relative bg-white rounded overflow-hidden flex flex-col flex-shrink-0 shadow-lg">
                     <form onSubmit={handleSubmit} className="p-6 bg-white rounded-lg shadow-md">
                         <div
                             onDragOver={handleDragOver}
@@ -304,14 +318,16 @@ export default function ImageUploadForm() {
                             accept="image/*"
                         />
 
-                        <button
+                        <div className='flex gap-4'><button
                             type="submit"
                             disabled={files.length === 0}
-                            className="w-1/2 mx-auto block mt-6 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
+                            className="w-1/3 mt-6 px-4 py-2 bg-black text-white font-semibold rounded hover:bg-stone-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
                         >
                             Process Images
                         </button>
-                    </form>
+                        <button type='button' onClick={clearAllImages} className=" mt-6 px-4 py-2 bg-black text-white font-semibold rounded hover:bg-stone-600 disabled:bg-gray-300 disabled:cursor-not-allowed">Clear All</button>
+                    </div>
+                        </form>
                 </div>
                 <div className="w-2/3">
                     <ImagePreview files={files} onRemove={removeFile} />
@@ -321,21 +337,24 @@ export default function ImageUploadForm() {
 
             {processedFiles.length > 0 && (
                 <div className="w-full mt-4">
-                    <h2 className="text-xl font-semibold mb-4">Processed Images</h2>
+                    <div className='flex gap-8 mb-4'>
+                        <h2 className="text-2xl inline font-semibold">Processed Images</h2>
+                        <button type='button' onClick={downloadAllImages} className='px-4 py-2 bg-black text-white font-semibold rounded hover:bg-stone-600 disabled:bg-gray-300 disabled:cursor-not-allowed'>Download</button>
+                    </div>
                     <div className="flex gap-4">
                         {processedFiles.map((dataUrl, index) => (
-                            <div key={index} className="flex flex-col items-center border-2 border-sky-300 rounded-md">
+                            <div key={index} className="flex flex-col items-center border-2 border-sky-300 rounded">
                                 <img
                                     src={dataUrl}
                                     alt={`Processed ${index}`}
                                     className="w-32 h-32 object-contain rounded-lg"
                                 />
-                                <button
+                                {/* <button
                                     onClick={() => downloadImage(dataUrl, `processed_${index}.png`)}
-                                    className="mt-2 px-4 py-2 text-black rounded-lg hover:bg-green-600 duration-300"
+                                    className="mt-2 p-1 bg-black text-white rounded-sm hover:bg-stone-600 duration-300"
                                 >
                                     Download
-                                </button>
+                                </button> */}
                             </div>
                         ))}
                     </div>
