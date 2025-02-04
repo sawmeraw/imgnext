@@ -8,20 +8,16 @@ export default function CleanColorName() {
     const [result, setResult] = useState<string>("");
 
     const capitalizeColorName = (name: string): string => {
-        const arr = name.split('/')
+        let arr = name.split('/')
+
         let resultArr: string[] = []
-        for (let word of arr) {
-            if (word.includes('-')) {
-                const innerWords = word.split('-')
-                for (let w of innerWords) {
-                    resultArr.push(w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
-                }
-            } else {
-                resultArr.push(word.charAt(0) + word.slice(1).toLowerCase())
-            }
+
+        for (let word of arr)
+        {
+            resultArr.push(word.split(' ').map(w=> w.charAt(0).toUpperCase()+ w.slice(1).toLowerCase()).join(' '))
         }
-        const resultString = resultArr.join('/')
-        return resultString
+
+        return resultArr.join('/')
     }
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
