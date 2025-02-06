@@ -29,7 +29,7 @@ export default function UpdateHokaVersion() {
         const version = form.version.value as string
 
         try{
-            const resp = await fetch('/version', {method: "POST",
+            const resp = await fetch('/api/version', {method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
