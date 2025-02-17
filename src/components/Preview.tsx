@@ -5,15 +5,13 @@ import { previewImagesDownload } from "@/utils/ImageParser";
 import { v4 as uuid } from "uuid";
 import ExampleImages from "./Example";
 import { useCartStore, useSearchStore } from "@/store/store";
-import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { LuPackagePlus } from "react-icons/lu";
 import Loading from "./Loading";
 
 const Preview = () => {
-  const {productCode, imageUrls, loading } = useSearchStore();
+  const { productCode, imageUrls, loading } = useSearchStore();
   const { cart, addSetToCart } = useCartStore();
-  const [validImageUrls, setValidImageUrls] = useState<string[]>([]);
 
   const handleDownloadClick = async () => {
     try {
@@ -34,9 +32,10 @@ const Preview = () => {
         matchCount++;
       }
     });
+
     if (matchCount === imageUrls.length) {
-      if(matchCount === 0){
-        toast.warn("Cant do that!", {autoClose: 3000})
+      if (matchCount === 0) {
+        toast.warn("Cant do that!", { autoClose: 3000 })
         return
       }
       console.log(cart)
@@ -75,7 +74,7 @@ const Preview = () => {
       <div className="flex flex-wrap gap-4 mt-4 justify-center">
         {imageUrls.length === 0 ? (
           <ExampleImages />
-        ) : (loading ? <Loading margin="mt-8"/> :  (
+        ) : (loading ? <Loading margin="mt-8" /> : (
           imageUrls.map((img, index) => {
             return (
               <SingleImage

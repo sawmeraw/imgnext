@@ -4,7 +4,7 @@ import { useState, useRef, DragEvent, ChangeEvent, FormEvent } from 'react';
 import ImagePreview from './UploadPreview';
 import { v4 as uuid } from "uuid";
 import { toast } from 'react-toastify';
-import { processImage } from '@/utils/imageProcessor';
+import { processImage, fileToDataUrl } from '@/utils/imageProcessor';
 
 export default function ImageUploadForm() {
     const [files, setFiles] = useState<File[]>([]);
@@ -74,20 +74,6 @@ export default function ImageUploadForm() {
         }
     };
 
-    // Convert a File to a data URL
-    const fileToDataUrl = (file: File): Promise<string> => {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => {
-                resolve(reader.result as string);
-            };
-            reader.onerror = () => {
-                reject(new Error('Failed to read file'));
-            };
-            //base64 encoded url for the src property of the image
-            reader.readAsDataURL(file);
-        });
-    };
 
     const downloadImage = (dataUrl: string, fileName: string) => {
         const link = document.createElement('a');

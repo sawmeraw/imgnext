@@ -168,3 +168,17 @@ export const findEdges = (
 
     return { leftStart, rightEnd };
 };
+
+export const fileToDataUrl = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            resolve(reader.result as string);
+        };
+        reader.onerror = () => {
+            reject(new Error('Failed to read file'));
+        };
+        //base64 encoded url for the src property of the image
+        reader.readAsDataURL(file);
+    });
+};
