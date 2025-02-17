@@ -19,7 +19,7 @@ export default function CartPage() {
         </Link>
         <div className="flex justify-between items-center">
           <h2 className="text-2xl mt-4 font-semibold">
-            Cargo <span className="text-sm">(Not a Cart)</span>
+            Cargo
           </h2>
           <div className="flex gap-6 items-center">
             <button
@@ -38,63 +38,63 @@ export default function CartPage() {
             </button>
           </div>
         </div>
-        
+
         <div className="overflow-x-auto mt-8">
-      {cart.length > 0 ? (
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-2/5">
-                URL
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-2/5">
-                Image
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/5">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {cart.map((item, index) => (
-              <tr key={index}>
-                <td className="px-6 py-4 whitespace-nowrap w-2/5">
-                  <input
-                    type="text"
-                    value={item}
-                    disabled
-                    className="w-full p-2 bg-slate-800 rounded-md text-white"
-                  />
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap w-2/5">
-                  <Image
-                    src={item}
-                    alt="Product Image"
-                    width={60}
-                    height={60}
-                    className="object-cover"
-                  />
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap w-1/5">
-                  <button
-                    className="bg-red-400 hover:bg-red-500 text-white py-2 px-4 rounded duration-300"
-                    onClick={() => removeFromCart(item)}
-                  >
-                    Remove
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <div className="text-center mt-16">
-          <p className="text-2xl">
-            No items in the <strong>CARGO</strong>
-          </p>
+          {cart.length > 0 ? (
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-2/5">
+                    URL
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-2/5">
+                    Image
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/5">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {cart.map((item, index) => (
+                  <tr key={index}>
+                    <td className="px-6 py-4 whitespace-nowrap w-2/5">
+                      <input
+                        type="text"
+                        value={item}
+                        disabled
+                        className="w-full p-2 bg-slate-800 rounded-md text-white"
+                      />
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap w-2/5">
+                      <Image
+                        src={item}
+                        alt="Product Image"
+                        width={60}
+                        height={60}
+                        className="object-cover"
+                      />
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap w-1/5">
+                      <button
+                        className="bg-red-400 hover:bg-red-500 text-white py-2 px-4 rounded duration-300"
+                        onClick={() => removeFromCart(item)}
+                      >
+                        Remove
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <div className="text-center mt-16">
+              <p className="text-2xl">
+                No items in the <strong>CARGO</strong>
+              </p>
+            </div>
+          )}
         </div>
-      )}
-    </div>
       </div>
     </PageWrapper>
   );

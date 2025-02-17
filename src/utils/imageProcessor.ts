@@ -12,6 +12,7 @@ export const processImage = async (file: File): Promise<File> => {
     return new Promise((resolve, reject) => {
         const img = new Image();
         img.src = URL.createObjectURL(file);
+        console.log(file.type);
 
         img.onload = () => {
             const canvas = document.createElement('canvas');
@@ -34,7 +35,7 @@ export const processImage = async (file: File): Promise<File> => {
             const data = imageData.data;
 
             const backgroundColor = getBackgroundColor(data, canvasWidth);
-            // console.log(`bgcolor: ${backgroundColor.r}, ${backgroundColor.g}, ${backgroundColor.b}`);
+            console.log(`bgcolor: ${backgroundColor.r}, ${backgroundColor.g}, ${backgroundColor.b}`);
 
             const topPadding = calculateTopPadding(data, canvasWidth, canvasHeight, backgroundColor);
             const bottomPadding = calculateBottomPadding(data, canvasWidth, canvasHeight, backgroundColor);
@@ -62,9 +63,8 @@ export const processImage = async (file: File): Promise<File> => {
                 return;
             }
 
-            finalCtx.fillStyle = `rgb(${backgroundColor.r}, ${backgroundColor.g}, ${backgroundColor.b})`;
+            finalCtx.fillStyle = `rgb(${backgroundColor.r !== 0 ? backgroundColor.r : 255}, ${backgroundColor.g !== 0 ? backgroundColor.g : 255}, ${backgroundColor.b !== 0 ? backgroundColor.b : 255})`;
             finalCtx.fillRect(0, 0, maxDimension, maxDimension);
-
 
             const x = (maxDimension - newWidth) / 2;
             const y = (maxDimension - newHeight) / 2;
@@ -87,9 +87,9 @@ export const processImage = async (file: File): Promise<File> => {
                     return;
                 }
                 //create a file from the blob with metadata
-                const processedFile = new File([blob], file.name, { type: 'image/png' });
+                const processedFile = new File([blob], file.name, { type: 'image/jpeg' });
                 resolve(processedFile);
-            }, 'image/png');
+            }, 'image/jpeg');
         };
 
         img.onerror = () => {

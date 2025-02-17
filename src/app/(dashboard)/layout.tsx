@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ToastContainer position="bottom-left" newestOnTop={true} draggable pauseOnHover={false} theme="dark" transition={Bounce}></ToastContainer>
+        <ToastContainer position="top-right" newestOnTop={true} draggable pauseOnHover={false} theme="dark" transition={Bounce}></ToastContainer>
         <Navbar />
         <main className="flex flex-1 flex-col items-center justify-between w-full">
           {children}
