@@ -19,7 +19,7 @@ export async function previewImagesDownload(
       const blob = await response.blob();
 
       try {
-        const file = new File([blob], productCode, { type: "image/png" });
+        const file = new File([blob], productCode, { type: "image/jpeg" });
         const processedFile = await processImage(file);
         fileArray.push(processedFile);
       } catch (error) {
@@ -41,7 +41,7 @@ export async function previewImagesDownload(
     productCode = productCode.replace(".", "");
     link.download = `${
       productCode ? productCode : "imgnext"
-    }-${randomHash.substring(0, 4)}`;
+    }-${randomHash.substring(0, 4)}.jpeg`;
     link.click();
   }
 }
@@ -67,9 +67,10 @@ export async function singleImageDownload(
 
     const randomHash = uuid();
 
+    productCode = productCode.replace(".", "");
     link.download = `${
       productCode ? productCode : "imgnext"
-    }-${randomHash.substring(0, 4)}`;
+    }-${randomHash.substring(0, 4)}.jpeg`;
     link.click();
     toast.success("Downloading...", {
       autoClose: 1000,
